@@ -1,6 +1,9 @@
 #!/bin/sh
 
-docker build --no-cache --tag prometheus:build . 
+docker build --no-cache --tag prometheus:build .
+docker tag prometheus:build gautada/prometheus:io-2.29.1
+docker push gautada/prometheus:io-2.29.1
+
 # docker run -it  --rm  --name crond crond:build /bin/sh
 # docker run -e APP_KEY=base64:QzHqTpf+hNEh9t9sm/9DgPsGXTtQ0ErOppLRisa14YU= -d -p 8000:8000 --rm --name cachet  cachet:build
 

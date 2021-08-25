@@ -10,7 +10,6 @@ FROM config-alpine as config-prometheus
 RUN apk add --no-cache bash build-base curl git go yarn
 
 RUN git config --global advice.detachedHead false
-# RUN git clone --branch v1.8.4 --depth 1 https://github.com/coredns/coredns.git coredns
 
 RUN mkdir /usr/lib/go/src/github.com
 WORKDIR /usr/lib/go/src/github.com
@@ -29,7 +28,7 @@ COPY --from=config-alpine /etc/timezone  /etc/timezone
 COPY --from=config-prometheus /usr/lib/go/src/github.com/prometheus/prometheus  /usr/bin/prometheus
 COPY --from=config-prometheus /usr/lib/go/src/github.com/prometheus/promtool  /usr/bin/promtool
 
-COPY config.yml /etc/prometheus/config.yml
+COPY config.yaml /etc/prometheus/config.yaml
 
 ENTRYPOINT ["/usr/bin/prometheus"]
-CMD ["--config.file=/etc/prometheus/config.yml"]
+CMD ["--config.file=/etc/prometheus/config.yaml"]
