@@ -6,3 +6,9 @@ Prometheus collects and stores its metrics as time series data, i.e. metrics inf
 
 [Repository](https://github.com/prometheus/prometheus)
 
+## Nodes
+
+One of the primary reasons for installing prometheus is to monitor and track the individual nodes.
+
+https://blog.alexellis.io/prometheus-nodeexporter-rpi/
+

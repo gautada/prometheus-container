@@ -1,11 +1,14 @@
-FROM alpine:3.14.1 as config-alpine
+ARG ALPINE_TAG=3.14.1
+FROM alpine:$ALPINE_TAG as config-alpine
 
 RUN apk add --no-cache tzdata
 
 RUN cp -v /usr/share/zoneinfo/America/New_York /etc/localtime
 RUN echo "America/New_York" > /etc/timezone
 
-FROM config-alpine as config-prometheus
+FROM alpine:$ALPINE_TAG as config-prometheus
+
+ARG OCI_VERSION=v0.0.0
 
 RUN apk add --no-cache bash build-base curl git go yarn
 
@@ -13,14 +16,14 @@ RUN git config --global advice.detachedHead false
 
 RUN mkdir /usr/lib/go/src/github.com
 WORKDIR /usr/lib/go/src/github.com
-RUN git clone --branch v2.29.1 --depth 1 https://github.com/prometheus/prometheus.git
+RUN git clone --branch $OCI_VERSION --depth 1 https://github.com/prometheus/prometheus.git
 WORKDIR /usr/lib/go/src/github.com/prometheus
 RUN make build
 RUN make assets
 
 WORKDIR /
 
-FROM alpine:3.14.1
+FROM alpine:$ALPINE_TAG
 
 COPY --from=config-alpine /etc/localtime /etc/localtime
 COPY --from=config-alpine /etc/timezone  /etc/timezone
