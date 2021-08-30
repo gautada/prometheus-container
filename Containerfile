@@ -21,7 +21,6 @@ WORKDIR /usr/lib/go/src/github.com/prometheus
 RUN make assets
 RUN make build
 
-
 WORKDIR /
 
 FROM alpine:$ALPINE_TAG
