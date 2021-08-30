@@ -18,8 +18,9 @@ RUN mkdir /usr/lib/go/src/github.com
 WORKDIR /usr/lib/go/src/github.com
 RUN git clone --branch $BRANCH --depth 1 https://github.com/prometheus/prometheus.git
 WORKDIR /usr/lib/go/src/github.com/prometheus
-RUN make build
 RUN make assets
+RUN make build
+
 
 WORKDIR /
 
@@ -35,10 +36,19 @@ COPY --from=config-prometheus /usr/lib/go/src/github.com/prometheus/promtool  /u
 
 COPY config.yaml /etc/prometheus/config.yaml
 
+RUN mkdir -p /opt/prometheus-data
+
+RUN chmod 777 /opt/prometheus-data
+             
 ARG USER=prometheus
 RUN addgroup $USER \
  && adduser -D -s /bin/sh -G $USER $USER \
  && echo "$USER:$USER" | chpasswd
  
+USER $USER
+WORKDIR /home/prometheus
+
+RUN ln -s /opt/prometheus-data /home/prometheus/data
+
 ENTRYPOINT ["/usr/bin/prometheus"]
 CMD ["--config.file=/etc/prometheus/config.yaml"]
