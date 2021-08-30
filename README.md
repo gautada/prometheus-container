@@ -12,3 +12,7 @@ One of the primary reasons for installing prometheus is to monitor and track the
 
 https://blog.alexellis.io/prometheus-nodeexporter-rpi/
 
+```
+docker build --build-arg ALPINE_TAG=3.14.1 --build-arg BRANCH=v2.29.1 --tag prometheus:dev -f Containerfile . 
+docker run -i -p 9090:9090 -t --name prometheus --rm prometheus:dev
+```
