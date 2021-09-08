@@ -1,3 +1,4 @@
+# ------------------------------------------------------------- [STAGE] INIT
 ARG ALPINE_TAG=3.14.1
 FROM alpine:$ALPINE_TAG as config-alpine
 
@@ -6,6 +7,7 @@ RUN apk add --no-cache tzdata
 RUN cp -v /usr/share/zoneinfo/America/New_York /etc/localtime
 RUN echo "America/New_York" > /etc/timezone
 
+# ------------------------------------------------------------- [STAGE] BUILD
 FROM alpine:$ALPINE_TAG as config-prometheus
 
 ARG BRANCH=v0.0.0
@@ -23,6 +25,7 @@ RUN make build
 
 WORKDIR /
 
+# ----------------------------------------------------------- [STAGE] FINAL
 FROM alpine:$ALPINE_TAG
 
 EXPOSE 9090

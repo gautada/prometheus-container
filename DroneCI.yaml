@@ -12,7 +12,7 @@ steps:
     DOCKER_PASSWORD:
       from_secret: password.docker.io
     ALPINE_TAG: 3.14.1
-    OCI_VERSION: v2.29.1
+    OCI_VERSION: v2.29.2
     OCI_OS: linux
     OCI_ARCH: arm64
   commands:

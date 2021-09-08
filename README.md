@@ -6,13 +6,23 @@ Prometheus collects and stores its metrics as time series data, i.e. metrics inf
 
 [Repository](https://github.com/prometheus/prometheus)
 
+## Container
+
+### Versions
+
+- [September 8, 2021](https://prometheus.io/download/) - Active version is 2.29.2 as tag [2.29.2](https://github.com/prometheus/prometheus/tags)
+
+### Manual Build
+
+```
+docker build --build-arg ALPINE_TAG=3.14.1 --build-arg BRANCH=v2.29.1 --tag prometheus:dev -f Containerfile . 
+docker run -i -p 9090:9090 -t --name prometheus --rm prometheus:dev
+```
+
+
 ## Nodes
 
 One of the primary reasons for installing prometheus is to monitor and track the individual nodes.
 
 https://blog.alexellis.io/prometheus-nodeexporter-rpi/
 
-```
-docker build --build-arg ALPINE_TAG=3.14.1 --build-arg BRANCH=v2.29.1 --tag prometheus:dev -f Containerfile . 
-docker run -i -p 9090:9090 -t --name prometheus --rm prometheus:dev
-```
